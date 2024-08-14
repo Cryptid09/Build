@@ -9,7 +9,7 @@ import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 
 export default function Card() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-purple-700  text-white">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b mt-10 from-black to-purple-700  text-white">
       <h2 className="text-4xl font-bold mb-10">Great for students with ADHD</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-4xl">
         <SingleCard

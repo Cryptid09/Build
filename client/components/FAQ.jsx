@@ -26,6 +26,9 @@ const FAQ = () => {
     {
       question: 'Is this legal at my school?',
       answer: 'Totally: as long as your professor is cool with you audio recording the class...',
+    },{
+      question:'Is there an Android app?',
+      answer: 'Not yet! But join our waitlist for first access.',
     },
 
   ];
@@ -35,7 +38,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
+    <div className="max-w-3xl mb-20 mx-auto p-6">
       <h2 className="text-3xl font-bold mb-8 text-center">Questions</h2>
       {faqs.map((faq, index) => (
         <FAQItem

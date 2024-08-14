@@ -21,8 +21,8 @@ export default function Reviews() {
   ];
 
   return (
-    <div className=" from-purple-700   text-white py-16">
-      <h2 className="text-3xl text-center mb-8">Reviews from the Discord</h2>
+    <div className="bg-gradient-to-b from-purple-700 to-black text-white py-16 transition-all duration-500">
+      <h2 className="text-4xl font-bold text-center mb-8">Reviews from the Discord</h2>
       <div className="flex flex-wrap justify-center">
         {reviews.map((review, index) => (
           <ReviewCard

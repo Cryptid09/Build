@@ -17,7 +17,7 @@ function NavBar() {
   };
 
   return (
-    <nav className="fixed z-10 top-0 w-full p-4  text-white flex justify-between items-center font-Noto">
+    <nav className="fixed z-10  w-full p-4  text-white flex justify-between items-center font-Noto">
       <div className="text-xl font-bold flex items-center">
         <CreateOutlinedIcon className='bg-white text-black rounded shadow-rainbow'/>
         <span className="ml-2">Build Your Notes</span>

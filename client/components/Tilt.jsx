@@ -19,9 +19,9 @@ const ScrollTiltImage = () => {
   }, []);
 
   return (
-    <div className="relative flex items-center justify-center h-screen bg-black text-white">
-      <div className="absolute top-4 left-4 font-bold text-xl">
-        Instantly turn audio and video into notes, flashcards, quizzes, and more
+    <div className="relative grid gap-28 place-items-center justify-center h-screen bg-black text-white">
+      <div className=" flex justify-center w-full top-4 left-4 font-bold z-10 text-4xl ">
+        <p className="text-wrap w-1/2">Instantly turn audio and video into notes, flashcards, quizzes, and more</p>
       </div>
       <div className="overflow-hidden rounded-lg shadow-lg">
         <Image
