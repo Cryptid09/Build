@@ -4,14 +4,16 @@ import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import Hero from "@/components/Hero";
-import StatusComponent from "@/components/StatusComponent";
+import Reviews from "@/components/Reviews";
+import ScrollTiltImage from "@/components/Tilt";
 const home = () => {
   return (
     <div>
       <NavBar />
       <Hero />
-      <StatusComponent />
+      <ScrollTiltImage/>
       <Card/>
+      <Reviews />
       <FAQ />
       
       <Footer />

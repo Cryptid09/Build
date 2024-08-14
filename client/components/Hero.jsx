@@ -1,21 +1,9 @@
 
-import Head from 'next/head';
+
 
 export default function Hero() {
-  return (    <div className="relative min-h-screen bg-gradient-to-b from-purple-800 via-purple-900 to-black text-white">
-    <Head>
-      <title>Never take notes again</title>
-    </Head>
-
-    <div className="absolute inset-0 flex justify-between items-start p-6">
-      <div className="flex items-center space-x-3">
-        <img src="/coconote-logo.png" alt="Coconote Logo" className="w-10 h-10"/>
-        <span className="font-semibold text-lg">Coconote</span>
-      </div>
-      <div className="bg-white bg-opacity-10 py-2 px-4 rounded-full">
-        Never take notes again
-      </div>
-    </div>
+  return (    <div className="top-0 relative min-h-screen bg-gradient-to-b from-purple-700 via-purple-900  to-black text-white">
+ 
 
     <div className="flex flex-col items-center justify-center text-center mt-20">
       <h1 className="text-6xl font-bold mb-6">Never take <br /> notes again</h1>
@@ -31,9 +19,25 @@ export default function Hero() {
     </div>
 
     {/* Bottom Curve using div */}
-    <div className="absolute bottom-0 left-0 right-0 h-40 overflow-hidden leading-none">
-      <div className="framer-1ax6d5t w-full h-full bg-black"></div>
+    <div className="relative bg-gradient-to-b from-purple-700 to-black h-64 flex items-center justify-center">
+      <div className="text-white text-center">
+        <div className="text-2xl mb-2">★★★★★</div>
+        <div className="text-lg">4.9 stars</div>
+      </div>
+      <div className="absolute bottom-0 w-full overflow-hidden leading-none">
+        <svg
+          className="relative block w-full h-24"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+        >
+          <path
+            fill="#000"
+            d="M0,256L80,224C160,192,320,128,480,106.7C640,85,800,107,960,117.3C1120,128,1280,128,1360,128L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
+          />
+        </svg>
+      </div>
     </div>
+    
   </div> );
 }
 
