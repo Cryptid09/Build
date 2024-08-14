@@ -1,6 +1,6 @@
 "use client";
 import NavBar from "@/components/Navbar";
-import Team from "@/components/Team";
+import Team from "@/components/FAQ";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import Doc from "@/components/Doc";
