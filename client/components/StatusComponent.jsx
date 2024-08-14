@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import Loader from "./Loader";
+import Loader from "./Card";
 import { FileDownloadOutlined } from "@mui/icons-material";
 function StatusComponent({ status, notesLink, error }) {
   return (

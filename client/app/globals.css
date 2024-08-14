@@ -25,9 +25,13 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .framer-1ax6d5t {
+    @apply rounded-t-full scale-x-150 bg-black;
+    height: 50%;
+    position: relative;
+    top: 20px;
   }
 }
+
+
