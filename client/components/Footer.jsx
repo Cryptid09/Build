@@ -9,12 +9,15 @@ const Footer = () => {
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
-            <a href="https://buildyournotes.com/" className="flex items-center">
-              <PencilIcon className="h-8 me-3 text-gray-900 dark:text-white" />
-              <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-                Build Your Notes
-              </span>
-            </a>
+          <div className="text-xl font-bold flex items-center">
+      <div className="relative grid justify-center">
+        <PencilIcon className="absolute rounded ml-1 mt-1 bg-white text-black opacity-100" />
+        <div className="relative p-4 rounded-[9px] bg-[conic-gradient(from_0deg_at_50%_50%,rgb(252,214,255)_0deg,rgb(41,216,255)_95.6757deg,rgb(255,253,130)_180deg,rgb(242,54,255)_257.23deg,rgb(252,214,255)_360deg)] blur-[8px] shadow-[rgba(241,56,255,0.3)_-2px_2px_20px_0px] opacity-50"></div>
+      </div>
+        <span className="ml-2">Build Your Notes</span>
+      </div>
+
+          
           </div>
           <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-2">
             <div>

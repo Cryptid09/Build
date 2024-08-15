@@ -1,26 +1,67 @@
+import Image from "next/image";
+import AppleIcon from "@mui/icons-material/Apple";
+import { Android } from "@mui/icons-material";
+export default function HeroSection() {
+  return (
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black via-purple-700 to-purple-600 text-center overflow-hidden">
+      {/* Top Icon */}
+      <div className="absolute mb- w-3/4  h-1/2 ">
+        <Image className="motion-reduce:animate-bounce"
+          src="https://framerusercontent.com/images/6zdlesWFPYIR2teu2H3SfDPkGYo.png"
+          alt="Top Icon"
+          objectFit="contain"
+          width={200}
+          height={100}
+        />
+      </div>
+    <div className="relative w-screen grid place-items-end h-0 pr-12 pt-36">
+        <Image className="rotate-12"
+          src="https://framerusercontent.com/images/wJfpLgr6fsOQ90tlk6AnCt2HKM.png"
+          alt="Top Icon"
+          width={200}
+          height={100}
+          objectFit="contain"
+        />
+      </div> 
 
+      {/* Main Text */}
+      <h1 className="text-5xl md:text-6xl font-extrabold text-white leading-tight">
+        Never take <br /> notes again
+      </h1>
 
-
-export default function Hero() {
-  return (    <div className="top-0 grid  relative min-h-screen bg-gradient-to-b from-purple-700 via-purple-900  to-black text-white">
- 
-
-    <div className="flex flex-col items-center justify-center text-center mt-20">
-      <h1 className="text-6xl font-bold mb-6">Never take <br /> notes again</h1>
-      <p className="text-lg mb-6">
-        Turn audio & video into <strong>notes, flashcards, quizzes</strong>, and more.<br />
+      {/* Subtext */}
+      <p className="text-lg md:text-xl text-gray-300 mt-4">
+        Turn audio & video into notes, <br /> flashcards, quizzes, and more.
+      </p>
+      <p className="text-lg md:text-xl text-gray-300 mt-2">
         100+ languages supported.
       </p>
-      <div className="flex space-x-4 mb-10">
-        <button className="bg-white text-black rounded-full py-2 px-8 text-lg font-semibold shadow-md">for iPhone</button>
-        <button className="bg-purple-600 bg-opacity-80 text-white rounded-full py-2 px-8 text-lg font-semibold shadow-md">Android & Web</button>
+
+      {/* Button */}
+      <div className="mt-8 flex items-center">
+        <button className="bg-white text-black font-bold py-2 px-6 rounded-full flex items-center shadow-lg">
+          for iPhone
+          <AppleIcon className="ml-2" />
+        </button>
       </div>
-      <p className="text-yellow-400 text-xl">⭐⭐⭐⭐⭐ 4.9 stars</p>
+      <div className="mt-8 flex items-center">
+        <button className="bg-[#353434] whitetext-black font-bold py-2 px-6 rounded-full flex items-center shadow-lg">
+          for Android
+          <Android className="ml-2" />
+        </button>
+      </div>
+
+      {/* Bottom Chart */}
+
+      {/* Curve */}
+      <div className="relative h-[600px] w-screen">
+
+  <div className=" absolute top-12 left-1/2 transform -translate-x-1/2 z-10 h-[100px] w-[200%] rounded-b-[100%] bg-gradient-to-t from-purple-700 via-[#fffefe51] to-[#ffffff07]"></div>
+  
+
+  <div className=" absolute border-t border-[#ffffff35] bottom-0 left-1/2 transform -translate-x-1/2 z-20 h-[550px] w-[200%] rounded-t-[100%] bg-gradient-to-b from-purple-500 via-gray-950 to-black"></div>
+</div>
+
     </div>
-
-   
-    
-  </div> );
+  );
 }
-
-
