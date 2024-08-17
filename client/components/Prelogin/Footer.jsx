@@ -5,7 +5,7 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import XIcon from "@mui/icons-material/X";
 const Footer = () => {
   return (
-    <footer className="bg-black">
+    <footer id="section5" className="bg-black">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
           <div className="mb-6 md:mb-0">
@@ -14,7 +14,7 @@ const Footer = () => {
         <PencilIcon className="absolute rounded ml-1 mt-1 bg-white text-black opacity-100" />
         <div className="relative p-4 rounded-[9px] bg-[conic-gradient(from_0deg_at_50%_50%,rgb(252,214,255)_0deg,rgb(41,216,255)_95.6757deg,rgb(255,253,130)_180deg,rgb(242,54,255)_257.23deg,rgb(252,214,255)_360deg)] blur-[8px] shadow-[rgba(241,56,255,0.3)_-2px_2px_20px_0px] opacity-50"></div>
       </div>
-        <span className="ml-2">Build Your Notes</span>
+        <span className="ml-2">Build My Notes</span>
       </div>
 
           

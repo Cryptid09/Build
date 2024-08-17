@@ -20,7 +20,7 @@ const FAQ = () => {
 
   const faqs = [
     {
-      question: 'What does Coconote do?',
+      question: 'What does this do?',
       answer: 'Instantly turn your lecture into organized notes, flashcards, quizzes, podcasts, and more...',
     },
     {
@@ -38,7 +38,7 @@ const FAQ = () => {
   };
 
   return (
-    <div className="max-w-3xl mb-20 mx-auto p-6">
+    <div id="section4" className="max-w-3xl mb-20 mx-auto p-6">
       <h2 className="text-3xl font-bold mb-8 text-center">Questions</h2>
       {faqs.map((faq, index) => (
         <FAQItem

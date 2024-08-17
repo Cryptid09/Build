@@ -19,7 +19,7 @@ const ScrollTiltImage = () => {
   }, []);
 
   return (
-    <div className="relative grid gap-28 place-items-center justify-center h-screen bg-black text-white">
+    <div id="section2" className="relative grid gap-28 place-items-center justify-center h-screen bg-black text-white">
       <div className=" flex justify-center w-full top-4 left-4 font-bold z-10 text-4xl ">
         <p className="text-wrap w-1/2">Instantly turn audio and video into notes, flashcards, quizzes, and more</p>
       </div>

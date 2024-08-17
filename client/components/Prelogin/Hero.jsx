@@ -3,7 +3,7 @@ import AppleIcon from "@mui/icons-material/Apple";
 import { Android } from "@mui/icons-material";
 export default function HeroSection() {
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black via-purple-700 to-purple-600 text-center overflow-hidden">
+    <div id="section1" className="relative flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-black via-purple-700 to-purple-600 text-center overflow-hidden">
       {/* Top Icon */}
       <div className="absolute mb- w-3/4  h-1/2 ">
         <Image className="motion-reduce:animate-bounce"
