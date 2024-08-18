@@ -2,7 +2,7 @@ import Navbar from "@/components/postlogin/Navbar";
 import { useState } from "react";
 const FAQItem = ({ question, answer, isOpen, toggle }) => {
   return (
-    <div className="border-b border-gray-300">
+    <div className="border-b text-black dark:text-white border-gray-300">
       <button
         className="w-full text-left py-4 text-lg font-medium flex justify-between items-center"
         onClick={toggle}
@@ -44,7 +44,7 @@ const Support = () => {
       <Navbar />
       <div className=" h-screen w-full grid place-items-center   ">
         <div className=" py-10 mb-8 px-20 w-1/2 mt-12 rounded dark:bg-[#393838ec] dark:text-white bg-gray-50">
-          <h2 className="text-3xl font-bold text-center mb-8">Questions</h2>
+          <h2 className="text-3xl font-bold text-center mb-8 text-black dark:text-white">Questions</h2>
           <div className="max-w-3xl mb-20  grid items-center  mx-auto ">
             {faqs.map((faq, index) => (
               <FAQItem

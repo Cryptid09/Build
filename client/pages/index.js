@@ -77,7 +77,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className={`${Login?`hidden`:`block`} font-sans`}>
+      <div className={`${Login?`hidden`:`block`} font-sans `}>
         <NavBar />
         <Hero />
         <ScrollTiltImage id="section4" />

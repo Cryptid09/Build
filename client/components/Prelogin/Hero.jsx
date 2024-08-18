@@ -45,7 +45,7 @@ export default function HeroSection() {
         </button>
       </div>
       <div className="mt-8 flex items-center">
-        <button className="bg-[#353434] whitetext-black font-bold py-2 px-6 rounded-full flex items-center shadow-lg">
+        <button className="bg-[#353434] text-white font-bold py-2 px-6 rounded-full flex items-center shadow-lg">
           for Android
           <Android className="ml-2" />
         </button>

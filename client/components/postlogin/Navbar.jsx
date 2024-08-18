@@ -119,7 +119,7 @@ const toggleNavbar = () => {
           href="/settings"
           className={`${
             pathname === "/settings"
-              ? `text-black font-semibold `
+              ? `text-black dark:text-white font-semibold `
               : `text-gray-400`
           } flex justify-end md:justify-start items-center space-x-3 w-36 `}
         >

@@ -11,7 +11,7 @@ import React from "react";
 
 const settings = () => {
   return (
-    <div className="w-screen h-auto bg-[#ebebe4] dark:bg-[#2b2a2a]">
+    <div className="w-screen h-auto text-black bg-[#ebebe4] dark:bg-[#2b2a2a]">
       <Navbar />
       <div className="max-w-md grid mx-auto  h-full p-4 ">
         <h2 className="text-lg pt-36 font-semibold mb-4 dark:text-white">
