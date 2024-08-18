@@ -15,7 +15,7 @@ const FAQItem = ({ question, answer, isOpen, toggle }) => {
   );
 };
 
-const support = () => {
+const Support = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
   const faqs = [
@@ -61,4 +61,4 @@ const support = () => {
     </div>
   );
 };
-export default support;
+export default Support;

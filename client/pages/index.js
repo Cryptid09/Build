@@ -66,7 +66,7 @@ export default function Home() {
               <div className="bg-white  dark:bg-[#4c4b4b] p-4 shadow-md rounded-lg flex justify-between items-center hover:bg-gray-100">
                 <div>
                   <h3 className="font-medium">
-                    Welcome! Here's how to get the most out of Coconote
+                    Welcome! Here&#39;s how to get the most out of Build My Notes
                   </h3>
                   <p className="text-sm text-gray-500">Aug 15, 2024</p>
                 </div>
