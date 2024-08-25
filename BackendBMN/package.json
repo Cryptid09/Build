@@ -1,0 +1,39 @@
+{
+  "name": "build-my-notes",
+  "version": "1.0.0",
+  "description": "A note-taking application that generates notes from video lectures",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@deepgram/sdk": "^3.5.1",
+    "axios": "^1.7.5",
+    "b2-sdk": "^1.7.0",
+    "backblaze-b2": "^1.7.0",
+    "child_process": "^1.0.2",
+    "connect-mongo": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.18.0",
+    "ffmpeg": "^0.0.4",
+    "fs": "^0.0.1-security",
+    "google-auth-library": "^9.14.0",
+    "m3u8-parser": "^7.2.0",
+    "mongoose": "^6.13.0",
+    "openai": "^4.56.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "path": "^0.12.7",
+    "react-google-login": "^5.2.2",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
