@@ -1,7 +1,6 @@
-
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
-import { useRouter } from 'next/router';  // Import the router for redirection
+import { useRouter } from 'next/router';
 
 const LoginContext = createContext();
 
@@ -10,12 +9,14 @@ export const useLogin = () => useContext(LoginContext);
 export const LoginProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
-  const router = useRouter();  // Initialize Next.js router
+  const router = useRouter();
+
+  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:5009/auth/current-user', { withCredentials: true });
+        const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
         if (response.data) {
           setUser(response.data);
           setIsLoggedIn(true);
@@ -23,6 +24,7 @@ export const LoginProvider = ({ children }) => {
           setIsLoggedIn(false);
         }
       } catch (error) {
+        console.error('Error fetching user:', error);
         setIsLoggedIn(false);
       }
     };
@@ -30,15 +32,15 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   const login = () => {
-    window.location.href = 'http://localhost:5009/auth/google';
+    window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:5009/auth/logout', {}, { withCredentials: true });
-      setIsLoggedIn(false);  // Set logged in state to false after logout
-      setUser(null);  // Clear user data
-      router.push('/');  // Redirect to the home page after logout
+      await axios.post(`${BACKEND_URL}/auth/logout`, {}, { withCredentials: true });
+      setIsLoggedIn(false);
+      setUser(null);
+      router.push('/');
     } catch (error) {
       console.error('Logout error', error);
     }
