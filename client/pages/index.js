@@ -111,16 +111,22 @@ export default function Home() {
 
   useEffect(() => {
     const handleAuthRedirect = async () => {
-      console.log('Checking auth status...');
+      console.log('Auth success detected in URL');
       await checkAuthStatus();
-      console.log('Auth status checked. isLoggedIn:', isLoggedIn, 'user:', user);
     };
 
     if (router.query.auth === 'success') {
-      console.log('Auth success detected in URL');
       handleAuthRedirect();
     }
   }, [router.query, checkAuthStatus]);
+
+  useEffect(() => {
+    console.log('Auth state changed. isLoggedIn:', isLoggedIn, 'user:', user);
+  }, [isLoggedIn, user]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -130,9 +136,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : isLoggedIn ? (
+      {isLoggedIn && user ? (
         <>
           <PostLoginNavbar />
         

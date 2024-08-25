@@ -20,7 +20,7 @@ export const LoginProvider = ({ children }) => {
     try {
       const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
       console.log('Auth status response:', response.data);
-      if (response.data) {
+      if (response.data && response.data.id) {
         setUser(response.data);
         setIsLoggedIn(true);
         console.log('User logged in:', response.data);
