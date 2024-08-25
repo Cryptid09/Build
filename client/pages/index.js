@@ -16,14 +16,16 @@ import { useLogin } from "@/context";
 import io from "socket.io-client";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // For GitHub flavored markdown
+import { useRouter } from 'next/router';
 
 export default function Home() {
-  const { isLoggedIn, user, login, isLoading } = useLogin();
+  const { isLoggedIn, user, login, isLoading, checkAuthStatus } = useLogin();
   const [videoLink, setVideoLink] = useState("");
   const [notes, setNotes] = useState(null); // State to store the generated notes
   const [notesList, setNotesList] = useState([]); // State to store the list of notes
   const [progress, setProgress] = useState(0); // Progress state
   const [isModalOpen, setModalOpen] = useState(false); // Modal state
+  const router = useRouter();
 
   // Replace all instances of "http://localhost:5009" with your Render deployment URL
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -106,6 +108,19 @@ export default function Home() {
     console.log('Initiating Google Sign-In');
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
+
+  useEffect(() => {
+    const handleAuthRedirect = async () => {
+      console.log('Checking auth status...');
+      await checkAuthStatus();
+      console.log('Auth status checked. isLoggedIn:', isLoggedIn, 'user:', user);
+    };
+
+    if (router.query.auth === 'success') {
+      console.log('Auth success detected in URL');
+      handleAuthRedirect();
+    }
+  }, [router.query, checkAuthStatus]);
 
   return (
     <>

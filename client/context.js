@@ -15,28 +15,31 @@ export const LoginProvider = ({ children }) => {
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   console.log('BACKEND_URL in context:', BACKEND_URL);
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
-        if (response.data) {
-          setUser(response.data);
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error('Error checking auth status:', error);
+  const checkAuthStatus = async () => {
+    console.log('Checking auth status...');
+    try {
+      const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
+      console.log('Auth status response:', response.data);
+      if (response.data) {
+        setUser(response.data);
+        setIsLoggedIn(true);
+        console.log('User logged in:', response.data);
+      } else {
         setIsLoggedIn(false);
         setUser(null);
-      } finally {
-        setIsLoading(false);
+        console.log('User not logged in');
       }
-    };
-
-    checkAuthStatus();
-  }, []);
+    } catch (error) {
+      console.error('Error checking auth status:', error);
+      setIsLoggedIn(false);
+      setUser(null);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const login = () => {
-    console.log('Login function called. Redirecting to:', `BACKEND_URL`);
+    console.log('Login function called. Redirecting to:', `${BACKEND_URL}/auth/google`);
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
@@ -51,7 +54,7 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ isLoggedIn, user, login, logout, isLoading }}>
+    <LoginContext.Provider value={{ isLoggedIn, user, login, logout, isLoading, checkAuthStatus }}>
       {children}
     </LoginContext.Provider>
   );

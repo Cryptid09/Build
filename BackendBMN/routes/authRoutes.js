@@ -6,17 +6,19 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 
 router.get('/google/callback', 
   (req, res, next) => {
-    console.log('Callback hit. Query:', req.query);
+    console.log('Callback hit. Full URL:', req.protocol + '://' + req.get('host') + req.originalUrl);
+    console.log('Query:', req.query);
     next();
   },
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('Google auth successful');
-    res.redirect(process.env.FRONTEND_URL);
+    console.log('Google auth successful, redirecting to:', `${process.env.FRONTEND_URL}?auth=success`);
+    res.redirect(`${process.env.FRONTEND_URL}?auth=success`);
   }
 );
 
 router.get('/current-user', (req, res) => {
+  console.log('Current user request. User:', req.user);
   if (req.isAuthenticated() && req.user) {
     res.json(req.user);
   } else {
