@@ -48,6 +48,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.set('trust proxy', true); // Added this line
+
 io.on('connection', (socket) => {
   console.log('A user connected');
   // Your socket event handlers

@@ -5,8 +5,13 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
+  (req, res, next) => {
+    console.log('Callback hit. Query:', req.query);
+    next();
+  },
+  passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
+    console.log('Google auth successful');
     res.redirect(process.env.FRONTEND_URL);
   }
 );
