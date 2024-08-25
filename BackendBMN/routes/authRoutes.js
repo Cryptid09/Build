@@ -7,8 +7,6 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    // Ensure the user is attached to the session
-    req.session.user = req.user;
     res.redirect(process.env.FRONTEND_URL);
   }
 );

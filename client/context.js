@@ -9,6 +9,7 @@ export const useLogin = () => useContext(LoginContext);
 export const LoginProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -25,6 +26,8 @@ export const LoginProvider = ({ children }) => {
         console.error('Error checking auth status:', error);
         setIsLoggedIn(false);
         setUser(null);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -46,7 +49,7 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ isLoggedIn, user, login, logout }}>
+    <LoginContext.Provider value={{ isLoggedIn, user, login, logout, isLoading }}>
       {children}
     </LoginContext.Provider>
   );

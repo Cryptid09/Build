@@ -18,7 +18,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // For GitHub flavored markdown
 
 export default function Home() {
-  const { isLoggedIn, user, login } = useLogin();
+  const { isLoggedIn, user, login, isLoading } = useLogin();
   const [videoLink, setVideoLink] = useState("");
   const [notes, setNotes] = useState(null); // State to store the generated notes
   const [notesList, setNotesList] = useState([]); // State to store the list of notes
@@ -107,29 +107,6 @@ export default function Home() {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`;
   };
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
-        if (response.data) {
-          setUser(response.data);
-          setIsLoggedIn(true);
-        }
-      } catch (error) {
-        console.error('Error checking auth status:', error);
-      }
-    };
-
-    checkAuthStatus();
-  }, []);
-
-  useEffect(() => {
-    // This will trigger a re-check of the auth status after redirect
-    if (!isLoggedIn) {
-      login();
-    }
-  }, []);
-
   return (
     <>
       <Head>
@@ -138,7 +115,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      {isLoggedIn ? (
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : isLoggedIn ? (
         <>
           <PostLoginNavbar />
         
