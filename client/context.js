@@ -13,6 +13,7 @@ export const LoginProvider = ({ children }) => {
   const router = useRouter();
 
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  console.log('BACKEND_URL in context:', BACKEND_URL);
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -35,6 +36,7 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   const login = () => {
+    console.log('Login function called. Redirecting to:', `${BACKEND_URL}/auth/google`);
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
