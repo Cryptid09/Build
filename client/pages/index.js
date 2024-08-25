@@ -18,7 +18,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm"; // For GitHub flavored markdown
 
 export default function Home() {
-  const { isLoggedIn, user } = useLogin();
+  const { isLoggedIn, user, login } = useLogin();
   const [videoLink, setVideoLink] = useState("");
   const [notes, setNotes] = useState(null); // State to store the generated notes
   const [notesList, setNotesList] = useState([]); // State to store the list of notes
@@ -121,6 +121,13 @@ export default function Home() {
     };
 
     checkAuthStatus();
+  }, []);
+
+  useEffect(() => {
+    // This will trigger a re-check of the auth status after redirect
+    if (!isLoggedIn) {
+      login();
+    }
   }, []);
 
   return (

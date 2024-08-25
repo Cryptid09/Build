@@ -14,21 +14,21 @@ export const LoginProvider = ({ children }) => {
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
   useEffect(() => {
-    const fetchUser = async () => {
+    const checkAuthStatus = async () => {
       try {
         const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
         if (response.data) {
           setUser(response.data);
           setIsLoggedIn(true);
-        } else {
-          setIsLoggedIn(false);
         }
       } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error('Error checking auth status:', error);
         setIsLoggedIn(false);
+        setUser(null);
       }
     };
-    fetchUser();
+
+    checkAuthStatus();
   }, []);
 
   const login = () => {
@@ -40,7 +40,6 @@ export const LoginProvider = ({ children }) => {
       await axios.post(`${BACKEND_URL}/auth/logout`, {}, { withCredentials: true });
       setIsLoggedIn(false);
       setUser(null);
-      router.push('/');
     } catch (error) {
       console.error('Logout error', error);
     }

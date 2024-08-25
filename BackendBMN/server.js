@@ -35,17 +35,13 @@ app.use(cors({
 app.use(express.json());
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'your_secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI,
-    ttl: 14 * 24 * 60 * 60
-  }),
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-    maxAge: 24 * 60 * 60 * 1000,
-    httpOnly: true,
+  cookie: { 
+    secure: process.env.NODE_ENV === 'production', 
+    sameSite: 'none',
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }
 }));
 

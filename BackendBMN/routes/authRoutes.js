@@ -5,18 +5,20 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://build-my-notes.vercel.app' }),
+  passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    // Successful authentication, redirect home.
-    res.redirect('http://build-my-notes.vercel.app');
+    // Ensure the user is attached to the session
+    req.session.user = req.user;
+    res.redirect(process.env.FRONTEND_URL);
   }
 );
 
 router.get('/current-user', (req, res) => {
-  if (req.isAuthenticated()) {
-    return res.json(req.user);
+  if (req.isAuthenticated() && req.user) {
+    res.json(req.user);
+  } else {
+    res.status(401).json({ message: 'Not authenticated' });
   }
-  return res.status(401).json({ message: 'Not authenticated' });
 });
 
 // Logout route
