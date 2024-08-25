@@ -103,7 +103,8 @@ export default function Home() {
 
   // In your sign-in button onClick handler
   const handleGoogleSignIn = () => {
-    window.location.href = `${BACKEND_URL}/auth/google`;
+    console.log('Backend URL:', process.env.NEXT_PUBLIC_BACKEND_URL);
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/google`;
   };
 
   useEffect(() => {
