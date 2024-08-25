@@ -4,14 +4,18 @@ const User = require('../models/User');
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
+  console.log('Serializing user:', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
+  console.log('Deserializing user id:', id);
   try {
     const user = await User.findById(id);
+    console.log('Deserialized user:', user);
     done(null, user);
   } catch (err) {
+    console.error('Error deserializing user:', err);
     done(err, null);
   }
 });
@@ -25,6 +29,7 @@ passport.use(
       callbackURL: `https://build-demg.onrender.com/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
+      console.log('Google strategy callback. Profile:', profile);
       try {
         let user = await User.findOne({ googleId: profile.id });
         if (!user) {
@@ -32,14 +37,14 @@ passport.use(
             googleId: profile.id,
             username: profile.displayName,
             email: profile.emails[0].value,
-            notesGenerated: 0, // Initialize notes generated count
-            isPremium: false, // Default premium status
           });
           await user.save();
         }
-        done(null, user);
+        console.log('User found or created:', user);
+        return done(null, user);
       } catch (err) {
-        done(err, null);
+        console.error('Error in Google strategy:', err);
+        return done(err, null);
       }
     }
   )
