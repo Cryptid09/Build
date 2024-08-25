@@ -26,6 +26,7 @@ export default function Home() {
   const [progress, setProgress] = useState(0); // Progress state
   const [isModalOpen, setModalOpen] = useState(false); // Modal state
   const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
 
   // Replace all instances of "http://localhost:5009" with your Render deployment URL
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -112,13 +113,20 @@ export default function Home() {
   useEffect(() => {
     const handleAuthRedirect = async () => {
       console.log('Auth success detected in URL');
+      setAuthChecked(true);
       await checkAuthStatus();
     };
 
-    if (router.query.auth === 'success') {
-      handleAuthRedirect();
+    if (router.isReady) {
+      if (router.query.auth === 'success' && !authChecked) {
+        handleAuthRedirect();
+      } else {
+        console.log('No auth success in URL or already checked');
+      }
+    } else {
+      console.log('Router not ready yet');
     }
-  }, [router.query, checkAuthStatus]);
+  }, [router.isReady, router.query, checkAuthStatus, authChecked]);
 
   useEffect(() => {
     console.log('Auth state changed. isLoggedIn:', isLoggedIn, 'user:', user);

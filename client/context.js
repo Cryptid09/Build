@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -15,7 +15,7 @@ export const LoginProvider = ({ children }) => {
   const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
   console.log('BACKEND_URL in context:', BACKEND_URL);
 
-  const checkAuthStatus = async () => {
+  const checkAuthStatus = useCallback(async () => {
     console.log('Checking auth status...');
     try {
       const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
@@ -36,11 +36,11 @@ export const LoginProvider = ({ children }) => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [BACKEND_URL]);
 
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, [checkAuthStatus]);
 
   const login = () => {
     console.log('Login function called. Redirecting to:', `${BACKEND_URL}/auth/google`);
