@@ -7,7 +7,7 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback', 
   passport.authenticate('google', { failureRedirect: 'http://build-my-notes.vercel.app' }),
   (req, res) => {
-    // Redirect to home or dashboard after successful login
+    // Successful authentication, redirect home.
     res.redirect('http://build-my-notes.vercel.app');
   }
 );

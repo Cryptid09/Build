@@ -101,6 +101,27 @@ export default function Home() {
     }
   };
 
+  // In your sign-in button onClick handler
+  const handleGoogleSignIn = () => {
+    window.location.href = `${BACKEND_URL}/auth/google`;
+  };
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const response = await axios.get(`${BACKEND_URL}/auth/current-user`, { withCredentials: true });
+        if (response.data) {
+          setUser(response.data);
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
+
   return (
     <>
       <Head>
