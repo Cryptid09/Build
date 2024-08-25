@@ -26,7 +26,7 @@ export default function Home() {
   const [isModalOpen, setModalOpen] = useState(false); // Modal state
 
   // Replace all instances of "http://localhost:5009" with your Render deployment URL
-  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://your-render-backend-url.onrender.com";
+  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "";
 
   // Fetch Notes List when user logs in
   useEffect(() => {

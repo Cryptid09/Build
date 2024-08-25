@@ -134,6 +134,9 @@ app.get('/auth/check-session', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5009;
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+const HOST = '0.0.0.0';  // Add this line
+
+// Update the server.listen call
+server.listen(PORT, HOST, () => {
+  console.log(`Server is running on http://${HOST}:${PORT}`);
 });
