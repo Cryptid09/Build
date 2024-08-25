@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+  import { useState, useEffect } from "react";
 import axios from "axios";
 import Head from "next/head";
 import PreLoginNavbar from "@/components/Prelogin/Navbar";
@@ -25,13 +25,16 @@ export default function Home() {
   const [progress, setProgress] = useState(0); // Progress state
   const [isModalOpen, setModalOpen] = useState(false); // Modal state
 
+  // Replace all instances of "http://localhost:5009" with your Render deployment URL
+  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "https://your-render-backend-url.onrender.com";
+
   // Fetch Notes List when user logs in
   useEffect(() => {
     if (isLoggedIn && user) {
       fetchNotesList(); // Fetch user's note list on login
     }
 
-    const socket = io("http://localhost:5009");
+    const socket = io(BACKEND_URL);
     socket.on("progress", (data) => {
       setProgress(data.progress);
     });
@@ -44,7 +47,7 @@ export default function Home() {
   // Fetch notes list
   const fetchNotesList = async () => {
     try {
-      const response = await axios.get(`http://localhost:5009/notes/${user._id}`);
+      const response = await axios.get(`${BACKEND_URL}/notes/${user._id}`);
       setNotesList(response.data.notesList); // Update notes list
     } catch (error) {
       console.error("Error fetching notes list:", error);
@@ -60,7 +63,7 @@ export default function Home() {
 
       if (match && match[1]) {
         const sbatId = match[1]; // Extracted sbatId
-        const response = await axios.post("http://localhost:5009/process-video", {
+        const response = await axios.post(`${BACKEND_URL}/process-video`, {
           sbatId,
           userId: user._id,
         });
@@ -79,7 +82,7 @@ export default function Home() {
   // Display the selected note from the list
   const handleNoteClick = async (noteId) => {
     try {
-      const response = await axios.get(`http://localhost:5009/notes/${noteId}`);
+      const response = await axios.get(`${BACKEND_URL}/notes/${noteId}`);
       setNotes(response.data.notes); // Display the selected note
     } catch (error) {
       console.error("Error fetching the note:", error);
