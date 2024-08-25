@@ -5,10 +5,10 @@ const router = express.Router();
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback', 
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000' }),
+  passport.authenticate('google', { failureRedirect: 'http://build-my-notes.vercel.app' }),
   (req, res) => {
     // Redirect to home or dashboard after successful login
-    res.redirect('http://localhost:3000');
+    res.redirect('http://build-my-notes.vercel.app');
   }
 );
 
