@@ -1,33 +1,24 @@
 import Navbar from "@/components/postlogin/Navbar";
 import { useState } from "react";
-const FAQItem = ({ question, answer, isOpen, toggle }) => {
-  return (
-    <div className="border-b text-black dark:text-white border-gray-300">
-      <button
-        className="w-full text-left py-4 text-lg font-medium flex justify-between items-center"
-        onClick={toggle}
-      >
-        {question}
-        <span className="text-2xl">{isOpen ? "−" : "+"}</span>
-      </button>
-      {isOpen && <p className="py-2 text-base text-gray-600">{answer}</p>}
-    </div>
-  );
-};
+import FAQItem from "@/components/questToggle";
 
 const Support = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
-  const faqs = [
+  const faq = [
     {
-      question: "What does this do?",
+      question: "How Do i Use it?",
       answer:
-        "Instantly turn your lecture into organized notes, flashcards, quizzes, podcasts, and more...",
+        "Just paste the video stuff will be genrated automatically",
     },
     {
-      question: "Is this legal at my school?",
+      question: "Can i edit Notes",
       answer:
-        "Totally: as long as your professor is cool with you audio recording the class...",
+        "Yes Soon we'll be rolling out this feature where you can interactively chat with a guide with context of your notes",
+    },
+    {
+      question: "Is Build My Notes free to use?",
+      answer:"Build My Notes offers a freemium model:Free Tier: You can generate notes for up to 3 videos for free.Premium Tier: After the free limit, you can subscribe to a monthly plan to generate unlimited notes."
     },
     {
       question: "Is there an Android app?",
@@ -40,23 +31,20 @@ const Support = () => {
   };
 
   return (
-    <div className="bg-[#ebebe4] absolute h-screen w-screen grid dark:bg-[#2b2a2a]">
-      <Navbar />
-      <div className=" h-screen w-full grid place-items-center   ">
-        <div className=" py-10 mb-8 px-20 w-1/2 mt-12 rounded dark:bg-[#393838ec] dark:text-white bg-gray-50">
-          <h2 className="text-3xl font-bold text-center mb-8 text-black dark:text-white">Questions</h2>
-          <div className="max-w-3xl mb-20  grid items-center  mx-auto ">
-            {faqs.map((faq, index) => (
-              <FAQItem
-                key={index}
-                question={faq.question}
-                answer={faq.answer}
-                isOpen={index === openIndex}
-                toggle={() => toggleFAQ(index)}
-              />
-            ))}
-          </div>
-        </div>
+    <div className="bg-[#ebebe4] absolute h-full w-full grid dark:bg-[#2b2a2a]">
+      <Navbar/>
+      <div className="max-w-md grid font-sans m-auto  h-full  text-black dark:text-white  ">
+      <div className="mt-20 shadow-lg md:mt-36  bg-white py-14 px-20 rounded-xl"> 
+        <div className="text-3xl w-full font-bold mb-8 text-center">FAQS</div>
+        {faq.map((faqs, index) => (
+        <FAQItem
+          key={index}
+          question={faqs.question}
+          answer={faqs.answer}
+          isOpen={index === openIndex}
+          toggle={() => toggleFAQ(index)}
+        />
+      ))}</div>
       </div>
     </div>
   );

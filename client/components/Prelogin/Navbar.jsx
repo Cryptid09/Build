@@ -1,14 +1,12 @@
 "use client";
 import { useLogin } from "@/context";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import QrCode2Icon from "@mui/icons-material/QrCode2";
+
 import { useState } from "react";
+import AllOutOutlinedIcon from '@mui/icons-material/AllOutOutlined';
 
 function NavBar() {
-  const {Login,setLogin} = useLogin();
-
-
-
+  const { login, isLoggedIn } = useLogin(); // Make sure to use login from context
   const [menuOpen, setMenuOpen] = useState(false);
 
   const handleScroll = (event, targetId) => {
@@ -30,13 +28,12 @@ function NavBar() {
         </div>
         <span className="ml-2">Build My Notes</span>
       </div>
-      {/* ...... */}
       <div>
         <button
           className="bg-white px-3 text-black p-2 rounded-full"
           onClick={() => setMenuOpen(!menuOpen)}
         >
-          Never take notes again <QrCode2Icon />
+        See More <AllOutOutlinedIcon />
         </button>
         {menuOpen && (
           <div className="absolute top-16 right-0 bg-[#1b1a1ad7] p-4 rounded-lg">
@@ -75,25 +72,20 @@ function NavBar() {
             >
               Contact
             </a>
-            <button
-              onClick={()=>setLogin(!Login)}
-              className="mt-2 relative inline-flex items-center justify-center px-4 py-1 overflow-hidden font-bold text-white rounded-md shadow-2xl group"
-            >
-              <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-pink-600 via-purple-700 to-blue-400 group-hover:opacity-100"></span>
-              <span className="absolute top-0 left-0 w-full bg-gradient-to-b from-white to-transparent opacity-5 h-1/3"></span>
-              <span className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-white to-transparent opacity-5"></span>
-              <span className="absolute bottom-0 left-0 w-4 h-full bg-gradient-to-r from-white to-transparent opacity-5"></span>
-              <span className="absolute bottom-0 right-0 w-4 h-full bg-gradient-to-l from-white to-transparent opacity-5"></span>
-              <span className="absolute inset-0 w-full h-full border border-white rounded-md opacity-10"></span>
-              <span className="absolute w-0 h-0 transition-all duration-300 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-5"></span>
-              <span className="relative">Sign up/in </span>
-            </button>
+            {!isLoggedIn && (
+              <button
+                onClick={login} // Call login when clicking Sign In
+                className="mt-2 relative inline-flex items-center justify-center px-4 py-1 overflow-hidden font-bold text-white rounded-md shadow-2xl group"
+              >
+                <span className="absolute inset-0 w-full h-full transition duration-300 ease-out opacity-0 bg-gradient-to-br from-pink-600 via-purple-700 to-blue-400 group-hover:opacity-100"></span>
+                <span className="relative">Sign in with Google</span>
+              </button>
+            )}
           </div>
         )}
       </div>
     </nav>
   );
-
 }
 
 export default NavBar;
