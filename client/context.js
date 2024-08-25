@@ -36,7 +36,7 @@ export const LoginProvider = ({ children }) => {
   }, []);
 
   const login = () => {
-    console.log('Login function called. Redirecting to:', `${BACKEND_URL}/auth/google`);
+    console.log('Login function called. Redirecting to:', `BACKEND_URL`);
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
