@@ -12,12 +12,13 @@ router.get('/google/callback',
   },
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('Google auth successful, redirecting to:', `${process.env.FRONTEND_URL}?auth=success`);
+    console.log('Google auth successful. User:', req.user);
     res.redirect(`${process.env.FRONTEND_URL}?auth=success`);
   }
 );
 
 router.get('/current-user', (req, res) => {
+  console.log('Current user request. Session:', req.session);
   console.log('Current user request. User:', req.user);
   if (req.isAuthenticated() && req.user) {
     res.json(req.user);

@@ -38,6 +38,10 @@ export const LoginProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
   const login = () => {
     console.log('Login function called. Redirecting to:', `${BACKEND_URL}/auth/google`);
     window.location.href = `${BACKEND_URL}/auth/google`;
