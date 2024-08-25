@@ -3,7 +3,7 @@ const http = require('http');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
-const socketIo = require('socket.io');
+const { Server } = require('socket.io');
 const { processVideo } = require('./controllers/videoProcessor');
 const authRoutes = require('./routes/authRoutes');
 const Video = require('./models/Video');  // Import the Video model
@@ -15,9 +15,9 @@ require('./config/passportGoogle'); // Google OAuth strategy setup
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server, {
+const io = new Server(server, {
   cors: {
-    origin: ["http://localhost:3000", "https://build-my-notes.vercel.app"],
+    origin: [ "https://build-my-notes.vercel.app","http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -27,7 +27,7 @@ const io = socketIo(server, {
 connectDB();
 
 app.use(cors({
-  origin: ["http://localhost:3000", "https://build-my-notes.vercel.app"],
+  origin: [ "https://build-my-notes.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST"],
   credentials: true,
 }));
@@ -53,11 +53,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 io.on('connection', (socket) => {
-  console.log('New client connected');
-  
-  socket.on('disconnect', () => {
-    console.log('Client disconnected');
-  });
+  console.log('A user connected');
+  // Your socket event handlers
+});
+
+io.on('connect_error', (error) => {
+  console.error('Socket.IO connection error:', error);
 });
 
 app.use('/auth', authRoutes);

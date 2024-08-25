@@ -34,8 +34,20 @@ export default function Home() {
       fetchNotesList(); // Fetch user's note list on login
     }
 
-    const socket = io(BACKEND_URL);
-    socket.on("progress", (data) => {
+    const socket = io(BACKEND_URL, {
+      withCredentials: true,
+      transports: ['websocket', 'polling'],
+    });
+
+    socket.on('connect', () => {
+      console.log('Connected to Socket.IO server');
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Socket.IO connection error:', error);
+    });
+
+    socket.on('progress', (data) => {
       setProgress(data.progress);
     });
 
