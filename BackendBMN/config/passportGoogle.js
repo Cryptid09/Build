@@ -31,17 +31,23 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       console.log('Google strategy callback. Profile:', profile);
       try {
+        // Look for user in the database by googleId
         let user = await User.findOne({ googleId: profile.id });
+        
+        // If user doesn't exist, create a new one with default values for isPremium and notesGenerated
         if (!user) {
           user = new User({
             googleId: profile.id,
             username: profile.displayName,
             email: profile.emails[0].value,
+            isPremium: false, // Set isPremium to false by default
+            notesGenerated: 0, // Initialize notesGenerated to 0
           });
           await user.save();
         }
+
         console.log('User found or created:', user);
-        return done(null, user);
+        return done(null, user); // Pass the user to the done callback
       } catch (err) {
         console.error('Error in Google strategy:', err);
         return done(err, null);
