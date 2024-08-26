@@ -77,7 +77,7 @@ const Navbar = () => {
         } md:text-left text-right md:mr-0 mr-4`}
       >
         <Link
-          href="/"
+          href="/main"
           className={`${
             pathname === "/" ? `text-black dark:text-[#fff8e1] font-semibold` : `text-gray-400`
           } flex justify-end md:justify-start items-center space-x-3 w-36 `}

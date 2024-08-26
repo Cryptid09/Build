@@ -38,6 +38,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // Use MongoDB to store sessions
   cookie: { 
     secure: process.env.NODE_ENV === 'production', 
     sameSite: 'none',
@@ -128,7 +129,7 @@ app.get('/auth/check-session', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ loggedIn: true });
   } else {
-    res.json({ loggedIn: false });
+    res.status(401).json({ message: 'Not authenticated' });
   }
 });
 
