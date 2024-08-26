@@ -17,7 +17,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: [ "https://build-my-notes.vercel.app","http://localhost:3000"],
+    origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"],
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -27,39 +27,49 @@ const io = new Server(server, {
 connectDB();
 
 app.use(cors({
-  origin: [ "https://build-my-notes.vercel.app", "http://localhost:3000"],
+  origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST"],
   credentials: true,
 }));
 
 app.use(express.json());
 
+// Log Mongo URI for debugging
+console.log('Mongo URI:', process.env.MONGO_URI);
+
+// Ensure proper session handling with MongoDB and secure cookies
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || 'defaultSecret', // Fallback in case SESSION_SECRET is not set
   resave: false,
   saveUninitialized: false,
-  store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }), // Use MongoDB to store sessions
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/myLocalDatabase', // Fallback to local DB if MONGO_URI not provided
+    autoRemove: 'interval',
+    autoRemoveInterval: 10,
+  }),
   cookie: { 
-    secure: process.env.NODE_ENV === 'production', 
-    sameSite: 'none',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    secure: process.env.NODE_ENV === 'production',  // Secure cookies in production
+    sameSite: 'none',  // For cross-origin requests with credentials
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
   }
 }));
 
+// Passport initialization after session middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('trust proxy', true); // Added this line
+app.set('trust proxy', true); // Ensure this is set for Heroku/Render deployments to handle cookies properly
 
+// Socket.IO connection
 io.on('connection', (socket) => {
   console.log('A user connected');
-  // Your socket event handlers
 });
 
 io.on('connect_error', (error) => {
   console.error('Socket.IO connection error:', error);
 });
 
+// Auth routes
 app.use('/auth', authRoutes);
 
 // Video processing route
@@ -71,13 +81,9 @@ app.post('/process-video', async (req, res) => {
   }
 
   try {
-    // Check if the video has already been processed
     let video = await Video.findOne({ sbatId });
     
     if (video) {
-      // If notes already exist, return the existing data instead of reprocessing
-      console.log(`[${new Date().toISOString()}] Video already processed, fetching notes...`);
-      
       const user = await User.findById(userId);
       if (!user.videos.includes(video._id)) {
         user.videos.push(video._id);
@@ -92,25 +98,21 @@ app.post('/process-video', async (req, res) => {
       });
     }
 
-    // If the video hasn't been processed, process it
     const result = await processVideo(sbatId, io);
 
-    // Create a new video entry in the Video model
     video = new Video({
       sbatId,
       notes: result.notes,
-      transcription: result.transcription, // Save both notes and transcription
-      videoLink: `https://scaler.com/class/${sbatId}` // Link to the original video, for example
+      transcription: result.transcription,
+      videoLink: `https://scaler.com/class/${sbatId}`
     });
 
     await video.save();
 
-    // Associate the video with the user
     const user = await User.findById(userId);
     user.videos.push(video._id);
     await user.save();
 
-    // Return success response
     return res.json({
       message: 'Video processed successfully',
       notes: result.notes,
@@ -129,14 +131,14 @@ app.get('/auth/check-session', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ loggedIn: true });
   } else {
-    res.status(401).json({ message: 'Not authenticated' });
+    res.json({ loggedIn: false });
   }
 });
 
+// Start the server
 const PORT = process.env.PORT || 5009;
-const HOST = '0.0.0.0';  // Add this line
+const HOST = '0.0.0.0';
 
-// Update the server.listen call
 server.listen(PORT, HOST, () => {
   console.log(`Server is running on http://${HOST}:${PORT}`);
 });

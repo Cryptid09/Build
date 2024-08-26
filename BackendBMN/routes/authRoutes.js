@@ -32,10 +32,11 @@ router.get('/current-user', (req, res) => {
   }
 });
 
-// Logout route
 router.post('/logout', (req, res) => {
+  console.log('Logout request received');
   req.logout((err) => {
     if (err) {
+      console.error('Logout error:', err);
       return res.status(500).json({ error: 'Logout failed' });
     }
 
