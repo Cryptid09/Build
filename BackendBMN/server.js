@@ -17,7 +17,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"], // Allowed origins
+    origin: ["https://build-my-notes.vercel.app", "http://localhost:3000","https://build-ms0b.onrender.com"], // Allowed origins
     methods: ["GET", "POST"],
     credentials: true // Required to allow cookies to be sent
   }
@@ -28,7 +28,7 @@ connectDB();
 
 // Enable CORS for cross-origin requests
 app.use(cors({
-  origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"], // Frontend URLs
+  origin: ["https://build-my-notes.vercel.app", "http://localhost:3000","https://build-ms0b.onrender.com"], // Frontend URLs
   methods: ["GET", "POST"],
   credentials: true, // Allow cookies
 }));
