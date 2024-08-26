@@ -35,7 +35,7 @@ app.use(cors({
 app.use(express.json());
 
 // Log Mongo URI for debugging
-console.log('Mongo URI:', process.env.MONGO_URI);
+console.log('Mongo URI:', process.env.MONGODB_URI);
 
 // Ensure proper session handling with MongoDB and secure cookies
 app.use(session({
@@ -43,7 +43,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/myLocalDatabase', // Fallback to local DB if MONGO_URI not provided
+    mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/myLocalDatabase', // Fallback to local DB if MONGO_URI not provided
     autoRemove: 'interval',
     autoRemoveInterval: 10,
   }),
