@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from 'next/router';
@@ -56,7 +57,7 @@ const Main = () => {
 
   const fetchNotesList = async () => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/notes/${user._id}`);
+      const response = await axios.get(`${BACKEND_URL}/notes/${user._id}`, { withCredentials: true });
       setNotesList(response.data.notesList);
     } catch (error) {
       console.error("Error fetching notes list:", error);
@@ -74,7 +75,7 @@ const Main = () => {
         const response = await axios.post(`${BACKEND_URL}/process-video`, {
           sbatId,
           userId: user._id,
-        });
+        }, { withCredentials: true });
         setNotes(response.data.notes); // Set the notes on success
         setModalOpen(false); // Close modal after submission
 
@@ -89,7 +90,7 @@ const Main = () => {
 
   const handleNoteClick = async (noteId) => {
     try {
-      const response = await axios.get(`${BACKEND_URL}/notes/${noteId}`);
+      const response = await axios.get(`${BACKEND_URL}/notes/${noteId}`, { withCredentials: true });
       setNotes(response.data.notes); // Display the selected note
     } catch (error) {
       console.error("Error fetching the note:", error);
