@@ -39,7 +39,7 @@ const Navbar = () => {
   const pathname = usePathname(); // Get the current route for active link styling
 
   return (
-    <div className={` ${isLoggedIn ? `block` : `hidden`} h-10 font-sans absolute z-10 w-full`}>
+    <div className=' h-10 font-sans absolute z-10 w-full'>
       <div className="flex justify-between w-full px-6 md:px-36 mt-4 md:mt-16 text-black dark:text-white">
         {/* Logo */}
         <div className="text-xl font-bold flex items-center">

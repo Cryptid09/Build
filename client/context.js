@@ -25,18 +25,23 @@ export const LoginProvider = ({ children }) => {
         setIsLoggedIn(true);
         console.log('User logged in:', response.data);
       } else {
-        setIsLoggedIn(false);
         setUser(null);
-        console.log('User not logged in');
+        setIsLoggedIn(false);
+        if (router.pathname !== '/') {
+          router.push('/');
+        }
       }
     } catch (error) {
       console.error('Error checking auth status:', error);
-      setIsLoggedIn(false);
       setUser(null);
+      setIsLoggedIn(false);
+      if (router.pathname !== '/') {
+        router.push('/');
+      }
     } finally {
       setIsLoading(false);
     }
-  }, [BACKEND_URL]);
+  }, [BACKEND_URL, router]);
 
   useEffect(() => {
     checkAuthStatus();

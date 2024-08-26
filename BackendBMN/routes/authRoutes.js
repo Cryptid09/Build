@@ -12,8 +12,8 @@ router.get('/google/callback',
   },
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log('Google auth successful. User:', req.user);
-    res.redirect(`${process.env.FRONTEND_URL}?auth=success`);
+    console.log('Google auth callback. User:', req.user);
+    res.redirect(`${process.env.FRONTEND_URL}/main`);
   }
 );
 
