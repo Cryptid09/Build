@@ -17,40 +17,42 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"],
+    origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"], // Allowed origins
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true // Required to allow cookies to be sent
   }
 });
 
 // Connect to MongoDB
 connectDB();
 
+// Enable CORS for cross-origin requests
 app.use(cors({
-  origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"],
+  origin: ["https://build-my-notes.vercel.app", "http://localhost:3000"], // Frontend URLs
   methods: ["GET", "POST"],
-  credentials: true,
+  credentials: true, // Allow cookies
 }));
 
-app.use(express.json());
+app.use(express.json()); // Body parser to handle JSON
 
-// Log Mongo URI for debugging
+// Log Mongo URI for debugging purposes
 console.log('Mongo URI:', process.env.MONGODB_URI);
 
 // Ensure proper session handling with MongoDB and secure cookies
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'defaultSecret', // Fallback in case SESSION_SECRET is not set
+  secret: process.env.SESSION_SECRET || 'defaultSecret', // Fallback session secret
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/myLocalDatabase', // Fallback to local DB if MONGO_URI not provided
+    mongoUrl: process.env.MONGODB_URI || 'mongodb://localhost:27017/myLocalDatabase', // Fallback to local DB if necessary
     autoRemove: 'interval',
-    autoRemoveInterval: 10,
+    autoRemoveInterval: 10, // Every 10 minutes
   }),
   cookie: { 
-    secure: process.env.NODE_ENV === 'production',  // Secure cookies in production
-    sameSite: 'none',  // For cross-origin requests with credentials
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    secure: process.env.NODE_ENV === 'production',  // Use secure cookies in production
+    httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
+    sameSite: 'none',  // Required for cross-origin cookies
+    maxAge: 24 * 60 * 60 * 1000, // Session expires after 24 hours
   }
 }));
 
@@ -58,9 +60,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.set('trust proxy', true); // Ensure this is set for Heroku/Render deployments to handle cookies properly
+app.set('trust proxy', 1); // Trust first proxy if running behind a proxy (Heroku, Render, etc.)
 
-// Socket.IO connection
+// Socket.IO connection handling
 io.on('connection', (socket) => {
   console.log('A user connected');
 });
@@ -69,25 +71,26 @@ io.on('connect_error', (error) => {
   console.error('Socket.IO connection error:', error);
 });
 
-// Auth routes
+// Auth routes for handling authentication
 app.use('/auth', authRoutes);
 
 // Video processing route
 app.post('/process-video', async (req, res) => {
-  const { sbatId, userId } = req.body;  // Get the sbatId and userId from the request body
-  
+  const { sbatId, userId } = req.body;  // Destructure sbatId and userId from request
+
   if (!sbatId || !userId) {
     return res.status(400).json({ error: 'Missing sbatId or userId' });
   }
 
   try {
+    // Check if the video is already processed
     let video = await Video.findOne({ sbatId });
     
     if (video) {
       const user = await User.findById(userId);
       if (!user.videos.includes(video._id)) {
         user.videos.push(video._id);
-        await user.save();
+        await user.save(); // Save user's processed video list
       }
 
       return res.json({
@@ -98,6 +101,7 @@ app.post('/process-video', async (req, res) => {
       });
     }
 
+    // If video isn't already processed, process it
     const result = await processVideo(sbatId, io);
 
     video = new Video({
@@ -107,10 +111,10 @@ app.post('/process-video', async (req, res) => {
       videoLink: `https://scaler.com/class/${sbatId}`
     });
 
-    await video.save();
+    await video.save(); // Save the video to the database
 
     const user = await User.findById(userId);
-    user.videos.push(video._id);
+    user.videos.push(video._id); // Add video to user's list
     await user.save();
 
     return res.json({
@@ -126,7 +130,7 @@ app.post('/process-video', async (req, res) => {
   }
 });
 
-// Route to check if a user is logged in
+// Route to check if the user is authenticated
 app.get('/auth/check-session', (req, res) => {
   if (req.isAuthenticated()) {
     res.json({ loggedIn: true });

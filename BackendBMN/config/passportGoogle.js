@@ -5,15 +5,15 @@ const User = require('../models/User');
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
   console.log('Serializing user:', user);
-  done(null, user.id);
+  done(null, user.id); // Stores user ID in session
 });
 
 passport.deserializeUser(async (id, done) => {
   console.log('Deserializing user id:', id);
   try {
     const user = await User.findById(id);
-    console.log('Deserialized user:', user);
-    done(null, user);
+    console.log('Deserialized user:', user); // Ensure user is correctly fetched from DB
+    done(null, user); // Populate req.user
   } catch (err) {
     console.error('Error deserializing user:', err);
     done(err, null);
@@ -26,27 +26,29 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: `https://build-demg.onrender.com/auth/google/callback`,
+      callbackURL: `${process.env.BACKEND_URL || 'http://localhost:5009'}/auth/google/callback`,
     },
     async (accessToken, refreshToken, profile, done) => {
       console.log('Google strategy callback. Profile:', profile);
       try {
-        // Look for user in the database by googleId
+        // Find user by Google ID
         let user = await User.findOne({ googleId: profile.id });
         
-        // If user doesn't exist, create a new one with default values for isPremium and notesGenerated
+        // If user does not exist, create a new one
         if (!user) {
           user = new User({
             googleId: profile.id,
             username: profile.displayName,
             email: profile.emails[0].value,
-            isPremium: false, // Set isPremium to false by default
-            notesGenerated: 0, // Initialize notesGenerated to 0
+            isPremium: false, // Default premium status
+            notesGenerated: 0, // Initialize with 0 notes generated
           });
           await user.save();
+          console.log('New user saved:', user);
+        } else {
+          console.log('Existing user found:', user);
         }
 
-        console.log('User found or created:', user);
         return done(null, user); // Pass the user to the done callback
       } catch (err) {
         console.error('Error in Google strategy:', err);
